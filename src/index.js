@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { use } from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter,Link,Route,Routes } from 'react-router-dom';
+import Login from './Login';
+import Signup from './Signup';
+import Landing from './Landing';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { useState } from 'react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+function App()
+{
+
+   const [users,setusers] = useState(
+
+    [
+        {
+            username:"kibo",
+            password:"1234"
+        }
+    ]
+   )
+
+   return( <div>
+    <BrowserRouter>
+    <Routes>
+    <Route path='/' element={<Login users={users} setusers={setusers}/>}></Route>
+    <Route path='/Signup' element={<Signup users={users} setusers={setusers}/>}></Route>
+    <Route path='/Landing' element={<Landing/>}></Route>
+    </Routes>
+    </BrowserRouter>
+   </div>)
+}
+
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <App/>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
