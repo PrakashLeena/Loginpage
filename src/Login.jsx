@@ -7,16 +7,14 @@ function Login(props) {
   const [epassword, setEpassword] = useState("");
   const [ruser, setRuser] = useState(true);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const users = props.users;
   const navigate = useNavigate();
-
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
-
 
   const validatePassword = (pass) => {
     return pass.length >= 6 && /\d/.test(pass);
@@ -24,13 +22,16 @@ function Login(props) {
 
   function handleUIput(evt) {
     setEusername(evt.target.value);
+    setError("");
+    setRuser(true);
   }
 
   function handlePIput(evt) {
     setEpassword(evt.target.value);
+    setError("");
   }
 
-  function checkUser() {
+  async function checkUser() {
     // --- Step 1: check empty fields ---
     if (!eusername || !epassword) {
       setError("All fields are required!");
@@ -49,39 +50,53 @@ function Login(props) {
       return;
     }
 
-    // --- Step 4: check in users list ---
-    const user = users.find(
-      (item) => item.username === eusername && item.password === epassword
-    );
-
-    if (!user) {
-      setError("⚠️ Invalid username or password! Please signup first.");
-      setRuser(false);
-      return;
-    }
-
-    // --- Step 5: success ---
+    setLoading(true);
     setError("");
-    console.log("Login successful");
-    navigate("/Landing", { state: { user: eusername } });
+
+    try {
+      // --- Step 4: check with backend API ---
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: eusername,
+          password: epassword
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // --- Step 5: success ---
+        console.log("Login successful");
+        navigate("/Landing", { state: { user: eusername } });
+      } else {
+        setError("⚠️ Invalid username or password! Please signup first.");
+        setRuser(false);
+      }
+    } catch (error) {
+      setError("⚠️ Network error. Please check if the backend server is running.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div>
-      <img className="w-screen h-auto absolute" src={img} alt="background" />
-      <div className="absolute inset-0 bg-black bg-opacity-60 w-screen h-auto"></div>
+      <img className="w-screen h-screen object-cover absolute inset-0" src={img} alt="background" />
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
       {/* Page Content */}
       <div className="relative">
         <header className="relative">
-          <div className="relative ml-14">
+          <div className="relative mx-4 md:ml-14 py-4">
             <svg
-              className="relative"
+              className="relative w-16 h-16 md:w-24 md:h-24"
               xmlns=" http://www.w3.org/2000/svg"
               x="0px"
               y="0px"
-              width="100"
-              height="100"
               viewBox="0 0 48 48"
             >
               <path
@@ -94,73 +109,72 @@ function Login(props) {
       </div>
 
       {/* Sign In Card */}
-      <div className="flex items-center justify-center w-screen h-screen relative">
-        <div className="relative bg-black/60 w-1/3 h-svh mb-36 rounded-md shadow-lg text-center">
-          <div className="bottom-16">
-            <h1 className="font-bold text-4xl font-sans text-white p-4 mt-16 mr-64">
+      <div className="flex items-start justify-center w-screen min-h-screen relative px-4">
+        <div className="relative bg-black/60 w-full max-w-md mx-auto rounded-md shadow-lg text-center p-6 md:p-8 mt-2">
+          <div>
+            <h1 className="font-bold text-2xl md:text-4xl font-sans text-white mb-4">
               Sign In
             </h1>
             {!ruser && (
-              <p className="text-red-700 font-bold">
+              <p className="text-red-700 font-bold mb-4">
                 Please Signup before you Login!
               </p>
             )}
           </div>
 
-          <div>
+          <div className="space-y-4">
             <input
               required
               value={eusername}
               onChange={handleUIput}
-              className={`p-4 m-2 rounded-md w-96 text-base bg-transparent border-2 text-white 
+              className={`p-4 rounded-md w-full text-base bg-transparent border-2 text-white 
                 ${error ? "border-red-500" : "border-gray-400"} 
                 focus:border-white focus:border-2`}
               type="email"
               placeholder="Email"
             />
-            <br />
 
             <input
               required
               value={epassword}
               onChange={handlePIput}
-              className={`p-4 m-2 rounded-md w-96 text-base bg-transparent border-2 text-white 
+              className={`p-4 rounded-md w-full text-base bg-transparent border-2 text-white 
                 ${error ? "border-red-500" : "border-gray-400"} 
                 focus:border-white`}
               type="password"
               placeholder="Password"
             />
-            <br />
 
             {error && <p className="text-red-600 font-bold">{error}</p>}
 
             <button
               onClick={checkUser}
-              className="bg-[#E50914] mt-2 w-96 py-2 rounded-lg text-white hover:bg-red-700"
+              disabled={loading}
+              className="bg-[#E50914] w-full py-3 rounded-lg text-white hover:bg-red-700 font-semibold disabled:opacity-50"
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
 
-            <p className="text-lg text-white mt-2">OR</p>
-            <p className="bg-white/10 mt-2 w-96 py-2 rounded-lg ml-16 text-white hover:bg-white/5">
+            <p className="text-lg text-white">OR</p>
+            <button className="bg-white/10 w-full py-3 rounded-lg text-white hover:bg-white/5">
               Use a Sign-In code
-            </p>
-            <p className="mt-3 text-white underline">Forgot password?</p>
+            </button>
+            <p className="text-white underline cursor-pointer">Forgot password?</p>
 
-            <div className="flex ml-16 items-center mt-10">
-              <input className="size-5" type="checkbox" />
-              <p className="text-white text-base ml-4">Remember me</p>
+            <div className="flex items-center justify-center mt-6">
+              <input className="w-4 h-4 mr-2" type="checkbox" />
+              <p className="text-white text-sm">Remember me</p>
             </div>
 
-            <div className="flex ml-10 mt-4 gap-2">
-              <p className="text-white/30 text-base ml-5">New to Netflix?</p>
-              <p className="text-white text-base hover:underline">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-1 mt-4">
+              <p className="text-white/30 text-sm">New to Netflix?</p>
+              <p className="text-white text-sm hover:underline">
                 <Link to={"/Signup"}>Sign up now.</Link>
               </p>
             </div>
 
-            <div className="px-24 mt-8 mr-3">
-              <p className="text-white text-xs">
+            <div className="mt-6">
+              <p className="text-white text-xs px-4">
                 This page is protected by Google reCAPTCHA to ensure you're not
                 a bot.
               </p>
@@ -171,16 +185,16 @@ function Login(props) {
 
       {/* Footer */}
       <div className="bg-[#161616]">
-        <div className="p-20">
+        <div className="p-6 md:p-20">
           <p className="text-[#BABABA] py-3">Questions? Contact us.</p>
-          <div className="flex text-[#BABABA] justify-between underline">
+          <div className="grid grid-cols-2 md:flex text-[#BABABA] justify-between underline gap-4 text-sm md:text-base">
             <p>FAQ</p>
             <p>Help Center</p>
             <p>Terms of Use</p>
             <p>Privacy</p>
           </div>
 
-          <div className="flex text-[#BABABA] mt-5 gap-64 underline">
+          <div className="grid grid-cols-1 md:flex text-[#BABABA] mt-5 md:gap-64 underline gap-4 text-sm md:text-base">
             <p>Cookie Preference</p>
             <p>Corporate Information</p>
           </div>
