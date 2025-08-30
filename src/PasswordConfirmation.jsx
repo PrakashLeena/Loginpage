@@ -14,6 +14,10 @@ function PasswordConfirmation(props) {
   const [cpassword, setCpassword] = useState("");
   const [error, setError] = useState("");
 
+  const validatePassword = (pass) => {
+    return pass.length >= 6 && /\d/.test(pass);
+  };
+
   function handlePassword(evt) {
     setPassword(evt.target.value);
   }
@@ -25,6 +29,11 @@ function PasswordConfirmation(props) {
   function handleSubmit() {
     if (!password || !cpassword) {
       setError("⚠️ Both fields are required!");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError("Password must be at least 6 characters and include a number.");
       return;
     }
 

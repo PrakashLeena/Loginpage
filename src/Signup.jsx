@@ -11,6 +11,11 @@ function Signup(props) {
     const [eusername, setEusername] = useState("")
     const [error, setError] = useState("")
 
+    const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+    }
+
     function handleUIput(evt) {
         setEusername(evt.target.value)
         setError("")
@@ -31,6 +36,11 @@ function Signup(props) {
             setError("⚠️ Username already exists! Please use another one.")
             return
         }
+
+        if (!validateEmail(eusername)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
         // If all checks pass, register user
         setusers([...users, { username: eusername }])
