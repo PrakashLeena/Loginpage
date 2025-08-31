@@ -30,7 +30,8 @@ function App()
    )
 
    function check(){
-     var logindetails = axios.get("http://localhost:5000/login")
+     const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
+     var logindetails = axios.get(`${apiUrl}/login`)
    }
 
    return( 
