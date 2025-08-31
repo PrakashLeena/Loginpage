@@ -54,21 +54,11 @@ function Login(props) {
     setError("");
 
     try {
-      // --- Step 4: check with backend API ---
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: eusername,
-          password: epassword
-        })
-      });
+      // --- Step 4: check with local storage ---
+      const storedUsers = JSON.parse(localStorage.getItem('netflixUsers') || '[]');
+      const user = storedUsers.find(u => u.username === eusername && u.password === epassword);
 
-      const data = await response.json();
-
-      if (data.success) {
+      if (user) {
         // --- Step 5: success ---
         console.log("Login successful");
         navigate("/Landing", { state: { user: eusername } });
@@ -77,7 +67,7 @@ function Login(props) {
         setRuser(false);
       }
     } catch (error) {
-      setError("⚠️ Network error. Please check if the backend server is running.");
+      setError("⚠️ An error occurred during login.");
     } finally {
       setLoading(false);
     }

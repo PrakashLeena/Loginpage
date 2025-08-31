@@ -1,13 +1,13 @@
-import React, { use } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter,Link,Route,Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import Signup from './Signup';
 import Landing from './Landing';
+import PasswordConfirmation from './PasswordConfirmation';
 import './index.css';
 import { useState } from 'react';
-import axios from 'axios'
-import PasswordConfirmation from './PasswordConfirmation';
+import axios from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

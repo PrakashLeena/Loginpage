@@ -1,7 +1,6 @@
 import img from "./assets/images/netflix.jpg"
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function Signup(props) {
     const navigate = useNavigate()
@@ -35,27 +34,19 @@ function Signup(props) {
         setError("")
 
         try {
-            // Check if user exists by trying to register with a temporary password
-            const response = await fetch('http://localhost:5000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: eusername,
-                    password: 'temp' // Temporary password, will be updated in PasswordConfirmation
-                })
-            });
+            // Check if user exists in local storage
+            const storedUsers = JSON.parse(localStorage.getItem('netflixUsers') || '[]');
+            const existingUser = storedUsers.find(u => u.username === eusername);
 
-            const data = await response.json();
-
-            if (data.success) {
-                navigate("/PasswordConfirmation", { state: { username: eusername } });
+            if (existingUser) {
+                setError("⚠️ User already exists! Please login instead.");
             } else {
-                setError(`⚠️ ${data.message}`);
+                // Store user temporarily for password confirmation
+                sessionStorage.setItem('tempUser', eusername);
+                navigate("/PasswordConfirmation", { state: { username: eusername } });
             }
         } catch (error) {
-            setError("⚠️ Network error. Please check if the backend server is running.");
+            setError("⚠️ An error occurred during signup.");
         } finally {
             setLoading(false)
         }

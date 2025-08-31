@@ -48,30 +48,24 @@ function PasswordConfirmation(props) {
     setError("");
 
     try {
-      // Update user password in backend
-      const response = await fetch('http://localhost:5000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: eusername,
-          password: password
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Navigate to Login
-        navigate("/");
-      } else {
-        // If user already exists, we need to update the password
-        // For now, we'll assume success and navigate
-        navigate("/");
-      }
+      // Save user to local storage
+      const storedUsers = JSON.parse(localStorage.getItem('netflixUsers') || '[]');
+      const newUser = {
+        username: eusername,
+        password: password,
+        createdAt: new Date().toISOString()
+      };
+      
+      storedUsers.push(newUser);
+      localStorage.setItem('netflixUsers', JSON.stringify(storedUsers));
+      
+      // Clear temporary session data
+      sessionStorage.removeItem('tempUser');
+      
+      // Navigate to Login
+      navigate("/");
     } catch (error) {
-      setError("⚠️ Network error. Please check if the backend server is running.");
+      setError("⚠️ An error occurred while creating your account.");
     } finally {
       setLoading(false);
     }
