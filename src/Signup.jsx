@@ -53,10 +53,10 @@ function Signup(props) {
     }
 
     return (
-        <div>
+        <div className="min-h-screen flex flex-col">
             <img className="w-screen h-screen object-cover absolute inset-0" src={img}></img>
             <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-            <div className="relative">
+            <div className="relative flex-1 flex flex-col">
                 <header className="relative">
                     <div className="relative mx-4 md:ml-14 flex justify-between items-center py-4">
                         <svg className="relative w-16 h-16 md:w-24 md:h-24" xmlns=" http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
@@ -66,9 +66,9 @@ function Signup(props) {
                         <button><Link to={"/"} className="mr-4 md:mr-20 bg-[#E50914] text-sm md:text-base font-semibold rounded-md px-3 md:px-5 py-2 text-white">Sign In</Link></button>
                     </div>
                 </header>
-            </div>
-            <div className="flex items-center justify-center w-screen min-h-screen relative px-4">
-                <div className="mb-8 md:mb-36 text-center max-w-4xl">
+                
+                <div className="flex-1 flex items-center justify-center px-4">
+                    <div className="mb-8 md:mb-36 text-center max-w-4xl">
                     <p className="font-extrabold text-3xl md:text-6xl font-sans text-white p-4 leading-tight">
                         Unlimited movies, TV<br />
                         <span className="block md:ml-16">shows, and more</span>
@@ -90,9 +90,10 @@ function Signup(props) {
                             {loading ? "Please wait..." : "Get Started"}
                         </button>
                     </div>
+                    </div>
                 </div>
             </div>
-
+            
             <div className="bg-[#161616]">
                 <div className="p-6 md:p-20">
                     <p className="text-[#BABABA] py-3">Questions? Contact us.</p>

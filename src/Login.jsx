@@ -74,12 +74,12 @@ function Login(props) {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <img className="w-screen h-screen object-cover absolute inset-0" src={img} alt="background" />
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
       {/* Page Content */}
-      <div className="relative">
+      <div className="relative flex-1 flex flex-col">
         <header className="relative">
           <div className="relative mx-4 md:ml-14 py-4">
             <svg
@@ -96,12 +96,11 @@ function Login(props) {
             </svg>
           </div>
         </header>
-      </div>
 
-      {/* Sign In Card */}
-      <div className="flex items-start justify-center w-screen min-h-screen relative px-4">
-        <div className="relative bg-black/60 w-full max-w-md mx-auto rounded-md shadow-lg text-center p-6 md:p-8 mt-2">
-          <div>
+        {/* Sign In Card */}
+        <div className="flex-1 flex items-center justify-center px-4">
+          <div className="relative bg-black/60 w-full max-w-md mx-auto rounded-md shadow-lg text-center p-6 md:p-8">
+            <div>
             <h1 className="font-bold text-2xl md:text-4xl font-sans text-white mb-4">
               Sign In
             </h1>
@@ -170,9 +169,10 @@ function Login(props) {
               </p>
             </div>
           </div>
+          </div>
         </div>
       </div>
-
+      
       {/* Footer */}
       <div className="bg-[#161616]">
         <div className="p-6 md:p-20">
