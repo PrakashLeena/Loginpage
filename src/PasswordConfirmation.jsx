@@ -1,6 +1,7 @@
 import { useState } from "react";
 import img from "./assets/images/netflix.jpg";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import PasswordInput from "./PasswordInput";
 
 function PasswordConfirmation(props) {
   const navigate = useNavigate();
@@ -96,18 +97,18 @@ function PasswordConfirmation(props) {
           </p>
 
           <div className="space-y-4">
-            <input
-              type="password"
+            <PasswordInput
+              value={password}
               onChange={handlePassword}
-              className="p-4 rounded-md w-full text-base bg-transparent border-gray-400 border-2 text-white focus:border-white focus:border-2"
               placeholder="Password"
+              error={!!error}
             />
             
-            <input
-              type="password"
+            <PasswordInput
+              value={cpassword}
               onChange={handleConfirmPassword}
-              className="p-4 rounded-md w-full text-base bg-transparent border-gray-400 border-2 text-white focus:border-white focus:border-2"
               placeholder="Confirm Password"
+              error={!!error}
             />
 
             {error && <p className="text-red-600 font-bold">{error}</p>}

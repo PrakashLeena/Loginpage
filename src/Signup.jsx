@@ -66,34 +66,35 @@ function Signup(props) {
                         <button><Link to={"/"} className="mr-4 md:mr-20 bg-[#E50914] text-sm md:text-base font-semibold rounded-md px-3 md:px-5 py-2 text-white">Sign In</Link></button>
                     </div>
                 </header>
-                
+
                 <div className="flex-1 flex items-center justify-center px-4">
                     <div className="mb-8 md:mb-36 text-center max-w-4xl">
-                    <p className="font-extrabold text-3xl md:text-6xl font-sans text-white p-4 leading-tight">
-                        Unlimited movies, TV<br />
-                        <span className="block md:ml-16">shows, and more</span>
-                    </p>
-                    <p className="text-white text-lg md:text-xl font-semibold mt-4">Starts at USD 2.99. Cancel anytime.</p>
-                    <p className="mt-6 md:mt-10 text-white text-sm md:text-base font-semibold px-4">Ready to watch? Enter your email to create or restart your membership.</p>
-                    {error && <p className="text-red-600 font-bold mt-2 px-4">{error}</p>}
-                    <div className="flex flex-col md:flex-row gap-2 mt-6 px-4 max-w-2xl mx-auto">
-                        <input 
-                            onChange={handleUIput} 
-                            className="p-4 rounded-md flex-1 text-base bg-black/50 border-green-900 border-2 focus:border-white focus:border-2 text-white" 
-                            placeholder="Email address"
-                        />
-                        <button 
-                            onClick={addUser} 
-                            disabled={loading}
-                            className="bg-[#E50914] px-6 md:px-12 py-4 rounded-lg text-white border-solid text-lg md:text-2xl font-semibold whitespace-nowrap disabled:opacity-50"
-                        >
-                            {loading ? "Please wait..." : "Get Started"}
-                        </button>
-                    </div>
+                        <p className="font-extrabold text-3xl md:text-6xl font-sans text-white p-4 leading-tight">
+                            Unlimited movies, TV<br />
+                            <span className="block md:ml-16">shows, and more</span>
+                        </p>
+                        <p className="text-white text-lg md:text-xl font-semibold mt-4">Starts at USD 2.99. Cancel anytime.</p>
+                        <p className="mt-6 md:mt-10 text-white text-sm md:text-base font-semibold px-4">Ready to watch? Enter your email to create or restart your membership.</p>
+                        {error && <p className="text-red-600 font-bold mt-2 px-4">{error}</p>}
+                        <div className="flex flex-col md:flex-row gap-2 mt-6 px-4 max-w-2xl mx-auto">
+                            <input
+                                onChange={handleUIput}
+                                className="p-4 rounded-md flex-1 text-base bg-black/50 border-green-900 border-2 focus:border-white focus:border-2 text-white"
+                                placeholder="Email address"
+                            />
+                            <button
+                                onClick={addUser}
+                                disabled={loading}
+                                className="bg-[#E50914] px-6 md:px-12 py-4 rounded-lg text-white border-solid text-lg md:text-2xl font-semibold whitespace-nowrap disabled:opacity-50"
+                            >
+                                {loading ? "Please wait..." : "Get Started"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
+            {/* Footer */}
             <div className="bg-[#161616]">
                 <div className="p-6 md:p-20">
                     <p className="text-[#BABABA] py-3">Questions? Contact us.</p>

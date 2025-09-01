@@ -1,6 +1,7 @@
 import { useState } from "react";
 import img from "./assets/images/netflix.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import PasswordInput from "./PasswordInput";
 
 function Login(props) {
   const [eusername, setEusername] = useState("");
@@ -123,15 +124,12 @@ function Login(props) {
               placeholder="Email"
             />
 
-            <input
+            <PasswordInput
               required
               value={epassword}
               onChange={handlePIput}
-              className={`p-4 rounded-md w-full text-base bg-transparent border-2 text-white 
-                ${error ? "border-red-500" : "border-gray-400"} 
-                focus:border-white`}
-              type="password"
               placeholder="Password"
+              error={!!error}
             />
 
             {error && <p className="text-red-600 font-bold">{error}</p>}
