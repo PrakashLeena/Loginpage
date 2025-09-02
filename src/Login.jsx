@@ -75,16 +75,16 @@ function Login(props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       <img className="w-screen h-screen object-cover absolute inset-0" src={img} alt="background" />
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
       {/* Page Content */}
-      <div className="relative flex-1 flex flex-col">
+      <div className="relative flex flex-col flex-1">
         <header className="relative">
-          <div className="relative mx-4 md:ml-14 py-4">
+          <div className="relative mx-4 md:ml-14">
             <svg
-              className="relative w-16 h-16 md:w-24 md:h-24"
+              className="relative w-12 h-12 md:w-16 md:h-16"
               xmlns=" http://www.w3.org/2000/svg"
               x="0px"
               y="0px"
@@ -99,10 +99,9 @@ function Login(props) {
         </header>
 
         {/* Sign In Card */}
-        <div className="flex-1 flex items-center justify-center px-4">
+        <div className="flex-1 flex items-start justify-center px-6">
           <div className="relative bg-black/60 w-full max-w-md mx-auto rounded-md shadow-lg text-center p-6 md:p-8">
-            <div>
-            <h1 className="font-bold text-2xl md:text-4xl font-sans text-white mb-4">
+            <h1 className="font-bold text-2xl md:text-4xl font-sans text-white mb-6">
               Sign In
             </h1>
             {!ruser && (
@@ -110,7 +109,6 @@ function Login(props) {
                 Please Signup before you Login!
               </p>
             )}
-          </div>
 
           <div className="space-y-4">
             <input
@@ -132,7 +130,7 @@ function Login(props) {
               error={!!error}
             />
 
-            {error && <p className="text-red-600 font-bold">{error}</p>}
+            {error && <p className="text-red-600 font-bold text-sm">{error}</p>}
 
             <button
               onClick={checkUser}
@@ -148,7 +146,7 @@ function Login(props) {
             </button>
             <p className="text-white underline cursor-pointer">Forgot password?</p>
 
-            <div className="flex items-center justify-center mt-6">
+            <div className="flex items-center justify-center mt-4">
               <input className="w-4 h-4 mr-2" type="checkbox" />
               <p className="text-white text-sm">Remember me</p>
             </div>
@@ -160,7 +158,7 @@ function Login(props) {
               </p>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-4">
               <p className="text-white text-xs px-4">
                 This page is protected by Google reCAPTCHA to ensure you're not
                 a bot.
@@ -172,7 +170,7 @@ function Login(props) {
       </div>
       
       {/* Footer */}
-      <div className="bg-[#161616]">
+      <div className="bg-[#161616] mt-auto">
         <div className="p-6 md:p-20">
           <p className="text-[#BABABA] py-3">Questions? Contact us.</p>
           <div className="grid grid-cols-2 md:flex text-[#BABABA] justify-between underline gap-4 text-sm md:text-base">
